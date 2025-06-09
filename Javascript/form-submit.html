@@ -11,7 +11,7 @@
     <form action="">
         <input id="input" type="text" placeholder="Type your name...">
         <!-- <button>Submit</button> -->
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" required>
         <p class="msg"></p>
     </form>
 
@@ -35,8 +35,16 @@
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const value = input.value;
-            const capitalizeName = capitalizeWords(value);
-            msg.innerHTML = `Form submitted by : ${capitalizeName}`
+            console.log(typeof value);
+            
+            if(value === "" || value.trim() === ""){
+                alert('Enter your name to the field!');
+            }
+            else{
+                alert('Thank you for submitting the form!');
+                const capitalizeName = capitalizeWords(value);
+                msg.innerHTML = `Form submitted by : ${capitalizeName}`
+            }
 
         })
 
