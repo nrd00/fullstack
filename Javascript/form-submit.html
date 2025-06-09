@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form Submition Functionality</title>
+</head>
+
+<body>
+    <form action="">
+        <input id="input" type="text" placeholder="Type your name...">
+        <!-- <button>Submit</button> -->
+        <input type="submit" value="Submit">
+        <p class="msg"></p>
+    </form>
+
+    <script>
+        const input = document.querySelector('#input');
+        const form = document.querySelector('form');
+        const msg = document.querySelector('.msg');
+
+        function capitalize(str) {
+            if (!str) return "";
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        }
+
+        function capitalizeWords(str) {
+            return str
+                .split(" ")
+                .map(word => capitalize(word))
+                .join(" ");
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const value = input.value;
+            const capitalizeName = capitalizeWords(value);
+            msg.innerHTML = `Form submitted by : ${capitalizeName}`
+
+        })
+
+
+
+
+
+    </script>
+</body>
+
+</html>
