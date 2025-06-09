@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us form validation</title>
+    <style>
+        form {
+            width: 350px;
+            background-color: aquamarine;
+            margin: 0 auto;
+            padding: 1.5rem;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label,
+        input {
+            display: block;
+        }
+
+        label {
+            margin-bottom: 0.6rem;
+        }
+
+        input:last-child {
+            margin-top: 0.6rem;
+        }
+
+        .error {
+            color: red;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <label for="name">Name</label> <span class="error" name="name"></span>
+        <input type="text" placeholder="Enter your name." name="name" id="name" autocomplete="name">
+        <label for="email">Email</label><span class="error" name="email"></span>
+        <input type="email" placeholder="Enter your email." name="email" id="email" autocomplete="email">
+        <label for="pass">Password</label><span class="error"></span>
+        <input type="password" placeholder="Enter your password." name="pass" id="pass">
+        <label for="subject">Subject</label> <span class="error"></span>
+        <select id="subject">
+            <option value="select">Select</option>
+            <option value="cs">Computer Science</option>
+            <option value="eee">Electrical & Elactronic Engineering</option>
+            <option value="ps">Psychology</option>
+        </select>
+        <label for="msg">Message</label> <span class="error"></span>
+        <textarea name="msg" id="msg" placeholder="Type your message."></textarea>
+        <input type="submit" value="Send Message">
+    </form>
+    <script>
+        const form = document.querySelector('form');
+        const err = document.querySelectorAll(".error");
+        const formData = {}
+
+        const checkExpression = (ex, text) => ex.test(text);
+
+        const checkValidation = (elements) =>{
+            const [name, email, password, subject, message] = form.elements;
+             //Name validation
+            if (!checkExpression(/^[a-zA-Z]+$/, name.value)) {
+                err[0].innerHTML = 'Name must be in letters only!'
+            } else {
+                err[0].innerHTML = ''
+                formData.name = name.value;
+            }
+            //Email validation
+            if (!checkExpression(/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/, email.value)) {
+                err[1].innerHTML = 'Enter a valid email!'
+            } else {
+                err[1].innerHTML = ''
+                formData.email = email.value;
+            }
+            //Password Validation
+            if (!checkExpression(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/, password.value)) {
+                err[2].innerHTML = 'Minimum 8 character. Uppercase, Lowercase, Digit, Special character must inclueded!'
+            } else {
+                err[2].innerHTML = ''
+                formData.password = password.value;
+            }
+            //Subject Validation
+            if (checkExpression(/^select$/, subject.value)) {
+                err[3].innerHTML = 'Select Preferred Subject!'
+            } else {
+                err[3].innerHTML = ''
+                formData.subject = subject.value;
+            }
+            //Message validation
+            if (!checkExpression(/^(?=.*[a-z]).{20,}$/, message.value)) {
+                err[4].innerHTML = 'Minimum 20 character is required!'
+            } else {
+                err[4].innerHTML = ''
+                formData.message = message.value;
+            }
+        }
+
+        
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            checkValidation(form.elements)
+            
+            if(Object.keys(formData).length === 5){
+                console.log(formData);
+                
+            }
+            // const elements_len = form.elements.length - 1;
+            // const formData_len = Object.keys(formData).length
+
+            // console.log(elements_len, formData_len);
+            
+                    
+        })
+        
+
+    </script>
+</body>
+
+</html>
