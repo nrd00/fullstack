@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>local storage</title>
+    <style>
+        form {
+            width: 300px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            row-gap: 0.8rem;
+            border: 1px solid salmon;
+            border-radius: 10px;
+            transition: all 1s ease-in;
+            margin: 2rem auto;
+        }
+
+        input,
+        textarea {
+            padding: 0.4rem 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <input type="text" placeholder="Enter your name">
+        <input type="email" placeholder="Enter your email">
+        <input type="number" placeholder="Enter your phone number">
+        <textarea name="msg" id="msg" placeholder="Description (Optional)"></textarea>
+        <input type="submit" value="Confirm Order">
+        <input type="button" id="reset" value="Reset">
+    </form>
+    <script>
+        const form = document.querySelector('form');
+        const [name, email, phone, msg, submit, reset] = form.elements;
+
+
+
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const localOrder = {
+                name: name.value,
+                email: email.value,
+                phone: phone.value,
+                msg: msg.value
+            }
+            localStorage.setItem('order', JSON.stringify(localOrder));
+
+
+
+        })
+
+        onload = (e) => {
+            const lOrder = JSON.parse(localStorage.getItem('order'));
+            
+            if(lOrder !== null){
+                 name.value = lOrder.name;
+                email.value = lOrder.email;
+                phone.value = lOrder.phone;
+                msg.value = lOrder.msg;
+            }else{
+                console.log(`No order on local storage!`);
+                
+            }
+                        
+        }
+
+        
+        reset.addEventListener('click', (e) => {
+            localStorage.removeItem('order');
+            name.value = "";
+            email.value = "";
+            phone.value = "";
+            msg.value = "";
+        })
+
+
+
+    </script>
+</body>
+
+</html>
